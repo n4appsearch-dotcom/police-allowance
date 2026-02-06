@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ระบบสืบค้นอัตราเงินเพิ่มพิเศษ</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0f172a; --secondary: #1e40af; --accent: #f97316;
+      --bg: #f1f5f9; --surface: #ffffff; --text: #1e293b;
+      --text-light: #64748b; --border: #e2e8f0; --tab-active: #dbeafe;
+    }
+    * { box-sizing: border-box; transition: all 0.2s ease; font-family: 'IBM Plex Sans Thai', sans-serif !important; }
+    body { margin: 0; color: var(--text); background-color: var(--bg); line-height: 1.6; }
+
+    .header {
+      background: linear-gradient(180deg, var(--primary) 0%, #1e3a8a 100%);
+      color: #fff; padding: 25px 15px; border-bottom: 4px solid var(--accent); text-align: center;
+    }
+    .header h1 { margin: 0; font-size: 26px; font-weight: 700; }
+    .owner-info { margin-top: 12px; opacity: 0.85; font-size: 16px; font-weight: 300; }
+
+    .container { max-width: 800px; margin: 15px auto 40px; padding: 0 15px; }
+
+    .tabs {
+      display: flex; gap: 4px; justify-content: center;
+      margin: 20px 0; background: #e2e8f0; padding: 5px; border-radius: 14px;
+    }
+    .tab-btn {
+      flex: 1; border: none; background: transparent; color: var(--text-light);
+      padding: 12px 10px; border-radius: 10px; cursor: pointer;
+      font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .tab-btn.active { background: #fff; color: var(--secondary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+    .panel { background: var(--surface); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+    .panel-header { padding: 20px 25px 12px; border-bottom: 1px solid var(--border); background: #fff; text-align: center; }
+    .panel-body { padding: 20px 25px; }
+    
+    .title-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: left; }
+    .panel-header h2 { margin: 0; font-size: 18px; font-weight: 600; color: var(--primary); line-height: 1.4; flex: 1; }
+
+    .unit-display-box { margin-bottom: 12px; border-left: 5px solid #fbbf24; padding-left: 15px; text-align: left; }
+    .unit-name { font-size: 18px; font-weight: 600; color: var(--secondary); display: block; line-height: 1.4; }
+
+    select { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--border); font-size: 16px; background: #fff; cursor: pointer; color: var(--text); }
+
+    /* Single Card: แคบ 550px + Gradient + Zebra */
+    .single-card { 
+      background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); 
+      border-radius: 12px; border: 1px solid #bfdbfe; overflow: hidden; 
+      max-width: 550px; margin: 0 auto 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .card-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #dbeafe; }
+    .card-row:nth-child(even) { background: rgba(255, 255, 255, 0.5); }
+    .card-row:last-child { border-bottom: none; }
+    .row-label { font-size: 16px; font-weight: 500; color: var(--text); flex: 1; text-align: left; }
+    .row-value { font-size: 18px; font-weight: 700; color: var(--secondary); text-align: right; white-space: nowrap; }
+    .row-value small { font-size: 14px; font-weight: 400; color: var(--text-light); margin-left: 5px; }
+
+    .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+    .btn-item {
+      background: #fff; border: 1px solid var(--border); padding: 14px; border-radius: 12px;
+      text-align: left; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 16px;
+    }
+    .btn-item:hover { border-color: var(--secondary); background: #eff6ff; }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 18px; border-top: 1px solid var(--border); }
+    .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-pdf-inline { background: var(--primary); color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+    .btn-back { background: #f8fafc; color: var(--text-light); border: 1px solid var(--border); }
+    .btn-home { background: #fff; color: var(--secondary); border: 1px solid var(--secondary); }
+    .btn-dark { background: #0f172a; color: #fff; }
+
+    .disclaimer { font-size: 14px; color: #ef4444; margin: 15px 0; text-align: center; font-style: italic; opacity: 0.85; }
+    .contact-footer { margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border); text-align: center; }
+    
+    .section-title { font-size: 18px; font-weight: 600; color: var(--primary); margin: 20px 0 8px; text-align: left; }
+    .line-group { margin-top: 14px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: #fff; }
+    .line-head { padding: 12px 14px; background: #eff6ff; border-bottom: 1px solid #dbeafe; font-size: 16px; font-weight: 600; color: var(--secondary); display: flex; justify-content: space-between; align-items: center; }
+    .chip-wrap { padding: 12px 14px 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { border: 1px solid var(--border); background: #f8fafc; color: var(--text); padding: 8px 12px; border-radius: 999px; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; cursor: default; }
+
+    .hide { display: none !important; }
+    #loader { text-align: center; padding: 40px; color: var(--secondary); font-weight: 500; background: #fff; border-radius: 16px; margin: 40px auto; max-width: 330px; }
+  </style>
+</head>
+<body>
+
+<header class="header">
+    <h1>ระบบสืบค้นอัตราเงินเพิ่มพิเศษ</h1>
+    <div class="owner-info">ฝ่ายเงินเพิ่มและเงินประจำตำแหน่ง กองอัตรากำลัง สำนักงานกำลังพล</div>
+</header>
+
+<div class="container">
+  <div id="loader">🔄 กำลังเชื่อมต่อฐานข้อมูล...</div>
+
+  <div class="tabs hide" id="tabsBar">
+    <button class="tab-btn active" id="tabUnit" onclick="switchTab('unit')">🏢 ค้นหาจากหน่วยงาน</button>
+    <button class="tab-btn" id="tabMoney" onclick="switchTab('money')">💰 ค้นหาจากประเภทเงิน</button>
+  </div>
+
+  <div id="tabUnitView" class="hide">
+    <section class="panel" id="step1">
+      <div class="panel-body">
+        <select id="unitSelect"><option value="">— กรุณาเลือกหน่วยงาน —</option></select>
+      </div>
+    </section>
+
+    <section class="panel hide" id="step2">
+      <div class="panel-header">
+        <div class="unit-display-box">
+          <span style="font-size: 11px; color: var(--text-light);">หน่วยงาน:</span>
+          <span class="unit-name" id="unitDisplay"></span>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="btn-grid" id="moneyButtons"></div>
+        <div class="actions"><button class="btn btn-home" onclick="showStep(1)">🏠 กลับหน้าแรก</button></div>
+      </div>
+    </section>
+
+    <section class="panel hide" id="step3">
+      <div class="panel-header"><h2 id="step3Title">รายละเอียด</h2></div>
+      <div class="panel-body">
+        <div id="rateGrid" class="single-card"></div>
+        <div class="actions">
+          <button class="btn btn-back" onclick="showStep(2)">⬅️ ย้อนกลับ</button>
+          <button class="btn btn-home" onclick="showStep(1)">🏠 กลับหน้าแรก</button>
+          <button class="btn btn-dark" id="openPdf">📄 ระเบียบ (PDF)</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="tabMoneyView" class="hide">
+    <section class="panel" id="moneyPanel">
+      <div class="panel-body">
+        <div id="moneySearchForm">
+          <select id="moneySelect"><option value="">— กรุณาเลือกประเภทเงิน —</option></select>
+        </div>
+        
+        <div class="hide" id="moneyResultWrap" style="margin-top:10px;">
+          <div class="panel" style="box-shadow:none; border:1px solid var(--border); margin-bottom:20px;">
+            <div class="panel-header">
+              <div class="title-row">
+                <h2 id="moneyFullTitle">รายละเอียด</h2>
+                <a href="#" class="btn-pdf-inline" id="moneyOpenPdf" target="_blank">📄 PDF</a>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div id="moneyRateGrid" class="single-card"></div>
+            </div>
+          </div>
+          <div class="section-title">สายงานที่มีสิทธิได้รับ</div>
+          <div id="unitLineGroups"></div>
+          <div class="actions" style="border-top:none; margin-top:20px;">
+            <button class="btn btn-back" onclick="backToMoneySearch()">🏠 กลับหน้าแรก</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="contactArea" class="hide">
+    <div class="disclaimer">*เพื่อการสืบค้นข้อมูลเบื้องต้น  โปรดตรวจสอบความถูกต้องจากบัญชีกำหนดตำแหน่ง</div>
+    <div class="contact-footer">
+      <div style="font-size:14px; color:var(--text-light);">📞 0 2205 2036 | 🌐 pdd.police.go.th</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CONFIG = {
+    IMAGE_MAP: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1568076346&single=true&output=csv",
+    UNIT_MONEY_MAP: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1586070411&single=true&output=csv",
+    RATE_TABLE: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=329415774&single=true&output=csv",
+    UNIT_LINE: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=2044497343&single=true&output=csv"
+  };
+
+  let DB = { units: new Map(), fullNames: new Map(), images: new Map(), rates: new Map(), unitLinesByBase: new Map(), moneyOptionsFromLine: [] };
+
+  // รหัส 7 หลัก
+  function baseId(id) { return id ? String(id).trim().slice(0, 7) : ""; }
+  
+  function show(el, yes) { if (el) el.classList.toggle("hide", !yes); }
+  function toggleContact(isVisible) { show(document.getElementById("contactArea"), isVisible); }
+
+  function switchTab(tab) {
+    document.getElementById("tabUnit").classList.toggle("active", tab === "unit");
+    document.getElementById("tabMoney").classList.toggle("active", tab === "money");
+    show(document.getElementById("tabUnitView"), tab === "unit");
+    show(document.getElementById("tabMoneyView"), tab === "money");
+    if (tab === "unit") showStep(1); else backToMoneySearch();
+  }
+
+  function showStep(n) {
+    [1,2,3].forEach(s => show(document.getElementById('step'+s), s === n));
+    if (n === 1) document.getElementById("unitSelect").value = ""; 
+    toggleContact(n === 1); 
+  }
+
+  function backToMoneySearch() {
+    show(document.getElementById("moneySearchForm"), true); // แสดงดรอปดาวน์
+    show(document.getElementById("moneyResultWrap"), false); // ซ่อนผลลัพธ์
+    document.getElementById("moneySelect").value = "";
+    toggleContact(true);
+  }
+
+  function parseCSV(text) {
+    const rows = []; let cur = [], field = "", inQuote = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (c === '"') inQuote = !inQuote;
+      else if (c === ',' && !inQuote) { cur.push(field.trim()); field = ""; }
+      else if (c === '\n' && !inQuote) { cur.push(field.trim()); rows.push(cur); cur = []; field = ""; }
+      else if (c !== '\r') field += c;
+    }
+    if (field.length || cur.length) { cur.push(field.trim()); rows.push(cur); }
+    return rows.filter(r => r.some(x => String(x || "").trim() !== ""));
+  }
+
+  function getVal(row, head, keys) {
+    for (let k of keys) {
+      const idx = head.indexOf(String(k).toLowerCase());
+      if (idx > -1) return row[idx] ?? "";
+    }
+    return "";
+  }
+
+  function safeNumDisplay(raw) {
+    raw = String(raw ?? "").trim();
+    if (raw === "" || raw === "-") return { d: "—", u: "" };
+    const clean = raw.replace(/,/g, ""); const num = Number(clean);
+    return (!isNaN(num) && clean !== "") ? { d: num.toLocaleString(), u: "บาท" } : { d: raw, u: "" };
+  }
+
+  async function init() {
+    try {
+      const [imRes, umRes, rtRes, ulRes] = await Promise.all([fetch(CONFIG.IMAGE_MAP), fetch(CONFIG.UNIT_MONEY_MAP), fetch(CONFIG.RATE_TABLE), fetch(CONFIG.UNIT_LINE)]);
+      const [imText, umText, rtText, ulText] = await Promise.all([imRes.text(), umRes.text(), rtRes.text(), ulRes.text()]);
+
+      const im = parseCSV(imText); const imHead = im[0].map(h => String(h).toLowerCase());
+      im.slice(1).forEach(r => {
+        const id = baseId(getVal(r, imHead, ["image_id", "imageid"]));
+        if (id) DB.images.set(id, { full_name: getVal(r, imHead, ["full_name", "ชื่อเต็ม"]), pdf_url: getVal(r, imHead, ["pdf_url", "ลิงก์pdf"]) });
+      });
+
+      const um = parseCSV(umText); const umHead = um[0].map(h => String(h).toLowerCase());
+      um.slice(1).forEach(r => {
+        const uShort = getVal(r, umHead, ["unit_name", "unit", "หน่วย"]), id = baseId(getVal(r, umHead, ["image_id", "imageid"]));
+        if (uShort) {
+          if (!DB.units.has(uShort)) DB.units.set(uShort, []);
+          DB.units.get(uShort).push({ m: getVal(r, umHead, ["money_name", "ประเภทเงิน"]), id });
+          DB.fullNames.set(uShort, getVal(r, umHead, ["full_unit_name", "ชื่อเต็มหน่วยงาน"]) || uShort);
+        }
+      });
+
+      const rt = parseCSV(rtText); const rtHead = rt[0].map(h => String(h).toLowerCase());
+      rt.slice(1).forEach(r => {
+        const id = baseId(getVal(r, rtHead, ["image_id", "imageid"]));
+        if (id) {
+          if (!DB.rates.has(id)) DB.rates.set(id, []);
+          DB.rates.get(id).push({ label: getVal(r, rtHead, ["ตำแหน่ง", "ระดับ", "label"]), amount: getVal(r, rtHead, ["amount", "อัตราเงิน"]), order: Number(getVal(r, rtHead, ["order", "ลำดับ"])|| 9999) });
+        }
+      });
+
+      const ul = parseCSV(ulText); const ulHead = ul[0].map(h => String(h).toLowerCase());
+      const moneySeen = new Set();
+      ul.slice(1).forEach(r => {
+        const uShort = getVal(r, ulHead, ["หน่วย", "unit", "unit_name"]), id = baseId(getVal(r, ulHead, ["image_id", "imageid"])), line = getVal(r, ulHead, ["สายงาน", "work_line"]) || "ทั่วไป", mNameFromLine = getVal(r, ulHead, ["ประเภทเงิน"]);
+        if (id && uShort) {
+          if (!DB.unitLinesByBase.has(id)) DB.unitLinesByBase.set(id, new Map());
+          const lineMap = DB.unitLinesByBase.get(id);
+          if (!lineMap.has(line)) lineMap.set(line, []);
+          lineMap.get(line).push({ unit: uShort, order_line: Number(getVal(r, ulHead, ["order_line"]) || 9999) });
+          if (mNameFromLine && !moneySeen.has(id)) {
+            DB.moneyOptionsFromLine.push({ id, name: mNameFromLine });
+            moneySeen.add(id);
+          }
+        }
+      });
+
+      const unitSelect = document.getElementById("unitSelect");
+      Array.from(DB.units.keys()).sort((a,b) => a.localeCompare(b, 'th')).forEach(u => { const opt = document.createElement("option"); opt.value = u; opt.textContent = u; unitSelect.appendChild(opt); });
+      unitSelect.onchange = (e) => { if (e.target.value) renderMoney(e.target.value); };
+
+      const moneySelect = document.getElementById("moneySelect");
+      DB.moneyOptionsFromLine.sort((a,b) => a.name.localeCompare(b.name, 'th')).forEach(item => { const opt = document.createElement("option"); opt.value = item.id; opt.textContent = item.name; moneySelect.appendChild(opt); });
+      moneySelect.onchange = (e) => { if (e.target.value) renderMoneyPath(baseId(e.target.value)); };
+
+      show(document.getElementById("loader"), false);
+      show(document.getElementById("tabsBar"), true);
+      switchTab("unit");
+    } catch (err) { console.error(err); }
+  }
+
+  function renderMoney(unitShort) {
+    document.getElementById("unitDisplay").textContent = DB.fullNames.get(unitShort) || unitShort;
+    const container = document.getElementById("moneyButtons"); container.innerHTML = "";
+    (DB.units.get(unitShort) || []).sort((a,b) => String(a.m).localeCompare(String(b.m), 'th')).forEach(item => {
+      const b = document.createElement("button"); b.className = "btn-item"; b.innerHTML = `<span>${item.m}</span> <span style="color:#94a3b8">→</span>`; b.onclick = () => renderResult(item.m, item.id); container.appendChild(b);
+    });
+    showStep(2);
+  }
+
+  function renderResult(mName, idRaw) {
+    const id = baseId(idRaw); const img = DB.images.get(id);
+    document.getElementById("step3Title").textContent = img?.full_name || mName || "รายละเอียด";
+    const grid = document.getElementById("rateGrid"); grid.innerHTML = "";
+    (DB.rates.get(id) || []).sort((a,b) => a.order - b.order).forEach(r => {
+      const v = safeNumDisplay(r.amount);
+      grid.innerHTML += `<div class="card-row"><div class="row-label">${r.label || "-"}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`;
+    });
+    document.getElementById("openPdf").onclick = (e) => { e.preventDefault(); if(img?.pdf_url) window.open(img.pdf_url, "_blank"); else alert("ไม่พบระเบียบ"); };
+    showStep(3);
+  }
+
+  function renderMoneyPath(idBase) {
+    show(document.getElementById("moneySearchForm"), false); // เอาส่วนดรอปดาวน์ออก (ซ่อน)
+    show(document.getElementById("moneyResultWrap"), true); // แสดงผลลัพธ์
+    toggleContact(false); 
+    const img = DB.images.get(idBase); document.getElementById("moneyFullTitle").textContent = img?.full_name || "รายละเอียด";
+    const rateGrid = document.getElementById("moneyRateGrid"); rateGrid.innerHTML = "";
+    (DB.rates.get(idBase) || []).sort((a,b) => a.order - b.order).forEach(r => {
+      const v = safeNumDisplay(r.amount);
+      rateGrid.innerHTML += `<div class="card-row"><div class="row-label">${r.label || "-"}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`;
+    });
+    document.getElementById("moneyOpenPdf").onclick = (e) => { e.preventDefault(); if(img?.pdf_url) window.open(img.pdf_url, "_blank"); else alert("ไม่พบระเบียบ"); };
+    
+    const groupsWrap = document.getElementById("unitLineGroups"); groupsWrap.innerHTML = "";
+    const lineMap = DB.unitLinesByBase.get(idBase);
+    if (lineMap) {
+      Array.from(lineMap.entries()).sort().forEach(([line, items]) => {
+        const box = document.createElement("div"); box.className = "line-group";
+        box.innerHTML = `<div class="line-head"><span>📌 ${line}</span><span class="line-count">${items.length} หน่วย</span></div>`;
+        const chips = document.createElement("div"); chips.className = "chip-wrap";
+        items.sort((a,b) => a.unit.localeCompare(b.unit, 'th')).forEach(u => {
+           chips.innerHTML += `<div class="chip"><span>${u.unit}</span></div>`;
+        });
+        box.appendChild(chips); groupsWrap.appendChild(box);
+      });
+    } else { groupsWrap.innerHTML = `<div class="muted" style="text-align:center; padding:10px 0;">ไม่พบข้อมูลหน่วยงาน</div>`; }
+  }
+
+  init();
+</script>
+</body>
+</html>
