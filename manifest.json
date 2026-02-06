@@ -1,0 +1,17 @@
+{
+  "name": "ระบบสืบค้นอัตราเงินเพิ่มพิเศษ",
+  "short_name": "สืบค้นเงินเพิ่ม",
+  "description": "ระบบสืบค้นอัตราเงินเพิ่มพิเศษ ฝ่ายเงินเพิ่มและเงินประจำตำแหน่ง กองอัตรากำลัง",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
