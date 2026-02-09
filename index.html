@@ -6,9 +6,11 @@
   <title>ระบบสืบค้นอัตราเงินเพิ่มพิเศษ</title>
   
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <link rel="manifest" href="manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon" href="icon192.jpg">
+  <link rel="apple-touch-icon" href="icon0192.png">
+  <link rel="icon" type="image/png" href="icon0192.png">
   <meta name="theme-color" content="#0f172a">
   
   <style>
@@ -169,7 +171,6 @@
 </div>
 
 <script>
-  // --- CONFIGURATION ---
   const CONFIG = {
     IMAGE_MAP: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1568076346&single=true&output=csv",
     UNIT_MONEY_MAP: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1586070411&single=true&output=csv",
@@ -179,7 +180,6 @@
 
   let DB = { units: new Map(), fullNames: new Map(), images: new Map(), rates: new Map(), unitLinesByBase: new Map(), moneyOptionsFromLine: [] };
 
-  // --- UTILS ---
   function baseId(id) { return id ? String(id).trim().slice(0, 7) : ""; }
   function show(el, yes) { if (el) el.classList.toggle("hide", !yes); }
   function toggleContact(isVisible) { show(document.getElementById("contactArea"), isVisible); }
@@ -233,7 +233,6 @@
     return (!isNaN(num) && clean !== "") ? { d: num.toLocaleString(), u: "บาท" } : { d: raw, u: "" };
   }
 
-  // --- INITIALIZATION ---
   async function init() {
     const loader = document.getElementById("loader");
     try {
@@ -243,19 +242,17 @@
       ]);
 
       for (const res of responses) {
-        if (!res.ok) throw new Error("ไม่สามารถเข้าถึงฐานข้อมูลได้ โปรดเช็คการเปิดเผยแพร่ Google Sheets");
+        if (!res.ok) throw new Error("ไม่สามารถเข้าถึงฐานข้อมูลได้");
       }
 
       const [imText, umText, rtText, ulText] = await Promise.all(responses.map(r => r.text()));
 
-      // Process 1: Image & PDF Info
       const im = parseCSV(imText); const imHead = im[0].map(h => String(h).toLowerCase());
       im.slice(1).forEach(r => {
         const id = baseId(getVal(r, imHead, ["image_id", "imageid"]));
         if (id) DB.images.set(id, { full_name: getVal(r, imHead, ["full_name", "ชื่อเต็ม"]), pdf_url: getVal(r, imHead, ["pdf_url", "ลิงก์pdf"]) });
       });
 
-      // Process 2: Unit -> Money Mapping
       const um = parseCSV(umText); const umHead = um[0].map(h => String(h).toLowerCase());
       um.slice(1).forEach(r => {
         const uShort = getVal(r, umHead, ["unit_name", "unit", "หน่วย"]), id = baseId(getVal(r, umHead, ["image_id", "imageid"]));
@@ -266,7 +263,6 @@
         }
       });
 
-      // Process 3: Rate Table
       const rt = parseCSV(rtText); const rtHead = rt[0].map(h => String(h).toLowerCase());
       rt.slice(1).forEach(r => {
         const id = baseId(getVal(r, rtHead, ["image_id", "imageid"]));
@@ -276,7 +272,6 @@
         }
       });
 
-      // Process 4: Unit Line (Reverse Search)
       const ul = parseCSV(ulText); const ulHead = ul[0].map(h => String(h).toLowerCase());
       const moneySeen = new Set();
       ul.slice(1).forEach(r => {
@@ -293,7 +288,6 @@
         }
       });
 
-      // Populate Selects
       const unitSelect = document.getElementById("unitSelect");
       Array.from(DB.units.keys()).sort((a,b) => a.localeCompare(b, 'th')).forEach(u => { 
         const opt = document.createElement("option"); opt.value = u; opt.textContent = u; unitSelect.appendChild(opt); 
@@ -306,17 +300,15 @@
       });
       moneySelect.onchange = (e) => { if (e.target.value) renderMoneyPath(baseId(e.target.value)); };
 
-      // Finish Loading
       show(loader, false);
       show(document.getElementById("tabsBar"), true);
       switchTab("unit");
     } catch (err) { 
       console.error(err);
-      loader.innerHTML = "❌ " + err.message + "<br><small>โปรดเช็คอินเทอร์เน็ตหรือการแชร์ Google Sheets</small>";
+      loader.innerHTML = "❌ " + err.message;
     }
   }
 
-  // --- RENDER FUNCTIONS ---
   function renderMoney(unitShort) {
     document.getElementById("unitDisplay").textContent = DB.fullNames.get(unitShort) || unitShort;
     const container = document.getElementById("moneyButtons"); container.innerHTML = "";
@@ -366,10 +358,10 @@
     }
   }
 
-  // --- SERVICE WORKER REGISTRATION (For PWA) ---
+  // ลงทะเบียน Service Worker เพื่อให้คอมพิวเตอร์และมือถือติดตั้งแอปได้
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW register failed:', err));
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
     });
   }
 
