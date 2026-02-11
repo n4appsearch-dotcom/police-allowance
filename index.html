@@ -174,13 +174,17 @@
       <div style="margin-top: 10px; font-size: 12px; color: #94a3b8; text-align: center;">
         Developed by Nathakorn T.
         
-<div style="margin-top: 15px; display: flex; justify-content: center; align-items: center; font-family: 'Sarabun', sans-serif; font-size: 12px; color: #64748b;">
-  <span style="margin-right: 6px;">จำนวนผู้ใช้งาน</span>
-  <span id="visit-count" style="background: #e2e8f0; padding: 2px 8px; border-radius: 3px; border: 1px solid #cbd5e1; color: #475569; min-width: 15px; text-align: center;">...</span>
+<div style="margin-top: 15px; display: flex; justify-content: center; align-items: center; font-family: 'Sarabun', sans-serif; font-size: 11px;">
+  <span style="background: #f1f5f9; color: #64748b; padding: 2px 10px; border: 1px solid #cbd5e1; border-right: none; border-radius: 4px 0 0 4px;">
+    จำนวนผู้ใช้งาน
+  </span>
+  <span id="visit-count" style="background: #e2e8f0; color: #475569; padding: 2px 10px; border: 1px solid #cbd5e1; border-radius: 0 4px 4px 0; min-width: 20px; text-align: center; font-weight: normal;">
+    ...
+  </span>
 </div>
 
 <script>
-  // โค้ดดึงตัวเลขจากระบบนับ (ดึงเฉพาะตัวเลขมาแสดงเท่านั้น)
+  // โค้ดดึงข้อมูลตัวนับ (Counter API)
   fetch('https://api.counterapi.dev/v1/n4appsearch/police-allowance/up')
     .then(res => res.json())
     .then(data => {
@@ -398,6 +402,7 @@
 </script>
 </body>
 </html>
+
 
 
 
