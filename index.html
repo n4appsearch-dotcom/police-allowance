@@ -176,11 +176,20 @@
         
 <div style="margin-top: 15px; display: flex; justify-content: center; align-items: center; font-family: 'Sarabun', sans-serif; font-size: 12px; color: #64748b;">
   <span style="margin-right: 6px;">จำนวนผู้ใช้งาน</span>
-  <div style="background: #e2e8f0; padding: 2px 8px; border-radius: 3px; display: inline-flex; align-items: center; overflow: hidden; height: 16px; border: 1px solid #cbd5e1;">
-    <img src="https://hits.dwyl.com/n4appsearch-dotcom/police-allowance.svg?style=flat-square" 
-         style="height: 22px; margin-left: -32px; filter: grayscale(1) brightness(0.7) contrast(1.2); vertical-align: middle;">
-  </div>
+  <span id="visit-count" style="background: #e2e8f0; padding: 2px 8px; border-radius: 3px; border: 1px solid #cbd5e1; color: #475569; min-width: 15px; text-align: center;">...</span>
 </div>
+
+<script>
+  // โค้ดดึงตัวเลขจากระบบนับ (ดึงเฉพาะตัวเลขมาแสดงเท่านั้น)
+  fetch('https://api.counterapi.dev/v1/n4appsearch/police-allowance/up')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('visit-count').innerText = data.count;
+    })
+    .catch(() => {
+      document.getElementById('visit-count').innerText = '0';
+    });
+</script>
 
         
 </div>
@@ -389,6 +398,7 @@
 </script>
 </body>
 </html>
+
 
 
 
