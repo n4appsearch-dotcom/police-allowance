@@ -57,14 +57,21 @@
     select { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--border); font-size: 16px; background: #fff; cursor: pointer; color: var(--text); }
 
     .single-card { 
-      background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); 
+      background: #ffffff; /* เปลี่ยนพื้นหลังหลักเป็นขาวเพื่อให้ตัดกับแถบสี */
       border-radius: 12px; border: 1px solid #bfdbfe; overflow: hidden; 
       max-width: 550px; margin: 0 auto 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
+    
     .card-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #dbeafe; }
-    .card-row:nth-child(even) { background: rgba(255, 255, 255, 0.5); }
+
+    /* แก้ไขข้อ 1: ปรับแถวสลับให้เป็นสีฟ้าเข้มขึ้น (Sky 100) เพื่อให้เห็นความต่างชัดเจน */
+    .card-row:nth-child(even) { background-color: #e0f2fe; } 
+
     .row-label { font-size: 16px; font-weight: 500; color: var(--text); flex: 1; text-align: left; }
-    .row-value { font-size: 18px; font-weight: 700; color: var(--secondary); text-align: right; }
+
+    /* แก้ไขข้อ 2 & 3: ปรับตัวเลขเป็นสีแดงเลือดนก (#800000) และดึงสี 'บาท' กลับมาเป็นสีน้ำเงิน */
+    .row-value { font-size: 19px; font-weight: 800; color: #800000; text-align: right; }
+    .row-value small { color: var(--secondary); font-weight: 500; margin-left: 5px; font-size: 14px; }
 
     .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
     .btn-item {
@@ -415,6 +422,7 @@
 </script>
 </body>
 </html>
+
 
 
 
