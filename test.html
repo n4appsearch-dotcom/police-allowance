@@ -69,4 +69,127 @@
     </section>
   </div>
 
-  <div id="tabMoney
+  <div id="tabMoneyView" class="hide">
+    <section class="panel" id="moneyPanel">
+      <div class="panel-body">
+        <select id="moneySelect"><option value="">— กรุณาเลือกประเภทเงิน —</option></select>
+        <div class="hide" id="moneyResultWrap" style="margin-top:20px;">
+          <div id="moneyRateGrid" class="single-card"></div>
+          <div class="actions"><button class="btn btn-home" onclick="backToMoneySearch()">🏠 ค้นหาใหม่</button></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="tabPositionView" class="hide">
+    <section class="panel" id="posStep1">
+      <div class="panel-body"><select id="posCategorySelect"><option value="">— เลือกประเภทเงินประจำตำแหน่ง —</option></select></div>
+    </section>
+    <section class="panel hide" id="posStep2">
+      <div class="panel-body">
+        <div class="profession-card">
+          <div style="font-weight: 700; color: var(--secondary); margin-bottom: 5px;">📋 สายงานที่มีสิทธิได้รับ:</div>
+          <div id="posProfessionsBox"></div>
+        </div>
+        <div id="posRateGrid" class="single-card"></div>
+        <div class="actions"><button class="btn btn-home" onclick="showPosStep(1)">🏠 ค้นหาใหม่</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="contactArea" class="hide" style="text-align:center; font-size:12px; color:var(--text-light); margin-top:20px;">
+    Developed by Nathakorn T. (กองอัตรากำลัง)
+  </div>
+</div>
+
+<script>
+  const CONFIG = {
+    IMAGE_MAP: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1568076346&single=true&output=csv",
+    UNIT_MONEY_MAP: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1586070411&single=true&output=csv",
+    RATE_TABLE: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=329415774&single=true&output=csv",
+    POSITION_ALLO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?output=csv"
+  };
+
+  let DB = { units: new Map(), images: new Map(), rates: new Map(), posAllo: new Map() };
+
+  function show(el, yes) { if (el) el.classList.toggle("hide", !yes); }
+  function parseCSV(text) { return text.split('\n').map(row => row.split(',').map(c => c.trim().replace(/^"|"$/g, ''))); }
+  function safeNumDisplay(raw) { 
+    const n = parseFloat(String(raw).replace(/,/g, ''));
+    return isNaN(n) ? { d: raw || "—", u: "" } : { d: n.toLocaleString(), u: "บาท" };
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+    show(document.getElementById("tabUnitView"), tab === "unit");
+    show(document.getElementById("tabMoneyView"), tab === "money");
+    show(document.getElementById("tabPositionView"), tab === "position");
+    if (tab === "unit") showStep(1); else if (tab === "money") backToMoneySearch(); else showPosStep(1);
+  }
+
+  function showStep(n) { [1,2,3].forEach(s => show(document.getElementById('step'+s), s === n)); show(document.getElementById("contactArea"), n === 1); }
+  function backToMoneySearch() { show(document.getElementById("moneySearchForm"), true); show(document.getElementById("moneyResultWrap"), false); show(document.getElementById("contactArea"), true); }
+  function showPosStep(n) { show(document.getElementById('posStep1'), n === 1); show(document.getElementById('posStep2'), n === 2); show(document.getElementById("contactArea"), n === 1); }
+
+  async function init() {
+    try {
+      const [imR, umR, rtR, psR] = await Promise.all([fetch(CONFIG.IMAGE_MAP), fetch(CONFIG.UNIT_MONEY_MAP), fetch(CONFIG.RATE_TABLE), fetch(CONFIG.POSITION_ALLO)]);
+      const [imT, umT, rtT, psT] = await Promise.all([imR.text(), umR.text(), rtR.text(), psR.text()]);
+
+      parseCSV(imT).slice(1).forEach(r => { if(r[0]) DB.images.set(r[0].slice(0,7), { name: r[1], pdf: r[2] }); });
+      parseCSV(umT).slice(1).forEach(r => { if(r[0]) { if(!DB.units.has(r[0])) DB.units.set(r[0], []); DB.units.get(r[0]).push({ m: r[1], id: r[2].slice(0,7) }); } });
+      parseCSV(rtT).slice(1).forEach(r => { const id = r[0].slice(0,7); if(!DB.rates.has(id)) DB.rates.set(id, []); DB.rates.get(id).push({ l: r[1], a: r[2] }); });
+      
+      // โหลดข้อมูลเงินประจำตำแหน่ง (จาก CSV ใหม่)
+      parseCSV(psT).slice(1).forEach(r => {
+        if (r[0]) {
+          if (!DB.posAllo.has(r[0])) DB.posAllo.set(r[0], { profs: r[1], rates: [] });
+          DB.posAllo.get(r[0]).rates.push({ rank: r[2], amt: r[3] });
+        }
+      });
+
+      const unitSel = document.getElementById("unitSelect");
+      Array.from(DB.units.keys()).sort().forEach(u => { const o = document.createElement("option"); o.value = u; o.textContent = u; unitSel.appendChild(o); });
+      unitSel.onchange = (e) => { if(e.target.value) renderMoney(e.target.value); };
+
+      const posSel = document.getElementById("posCategorySelect");
+      Array.from(DB.posAllo.keys()).forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; posSel.appendChild(o); });
+      posSel.onchange = (e) => { if(e.target.value) renderPosResult(e.target.value); };
+
+      show(document.getElementById("loader"), false);
+      show(document.getElementById("tabsBar"), true);
+      switchTab("unit");
+    } catch (e) { document.getElementById("loader").innerHTML = "❌ โหลดข้อมูลไม่สำเร็จ"; }
+  }
+
+  function renderMoney(u) {
+    document.getElementById("unitDisplay").textContent = u;
+    const cont = document.getElementById("moneyButtons"); cont.innerHTML = "";
+    DB.units.get(u).forEach(item => {
+      const b = document.createElement("button"); b.className = "btn-item"; b.innerHTML = `<span>${item.m}</span> <span>→</span>`;
+      b.onclick = () => renderResult(item.m, item.id); cont.appendChild(b);
+    });
+    showStep(2);
+  }
+
+  function renderResult(m, id) {
+    const img = DB.images.get(id); document.getElementById("step3Title").textContent = img?.name || m;
+    const grid = document.getElementById("rateGrid"); grid.innerHTML = "";
+    (DB.rates.get(id) || []).forEach(r => { const v = safeNumDisplay(r.a); grid.innerHTML += `<div class="card-row"><div>${r.l}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`; });
+    document.getElementById("openPdf").onclick = () => { if(img?.pdf) window.open(img.pdf, "_blank"); else alert("ไม่พบระเบียบ"); };
+    showStep(3);
+  }
+
+  function renderPosResult(cat) {
+    const data = DB.posAllo.get(cat);
+    document.getElementById("posProfessionsBox").textContent = data.profs;
+    const grid = document.getElementById("posRateGrid"); grid.innerHTML = "";
+    data.rates.forEach(r => { const v = safeNumDisplay(r.amt); grid.innerHTML += `<div class="card-row"><div>${r.rank}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`; });
+    showPosStep(2);
+  }
+
+  init();
+</script>
+</body>
+</html>
