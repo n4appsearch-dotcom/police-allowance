@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TEST - ระบบสืบค้นเงินเพิ่มและเงินประจำตำแหน่ง</title>
+  <title>TEST - ระบบสืบค้นเงินเพิ่มและเงินประจำตำแหน่ง (ฉบับทดสอบ)</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -13,41 +13,61 @@
     }
     * { box-sizing: border-box; transition: all 0.2s ease; font-family: 'IBM Plex Sans Thai', sans-serif !important; }
     body { margin: 0; color: var(--text); background-color: var(--bg); line-height: 1.6; }
+    
+    /* Header */
     .header { background: linear-gradient(180deg, var(--primary) 0%, #1e3a8a 100%); color: #fff; padding: 25px 15px; border-bottom: 4px solid var(--accent); text-align: center; }
+    .header h1 { margin: 0; font-size: 22px; font-weight: 700; }
+    .header .test-label { font-size: 13px; color: #cbd5e1; margin-bottom: 5px; letter-spacing: 1px; }
+
     .container { max-width: 800px; margin: 15px auto 40px; padding: 0 15px; }
+
+    /* Tabs Navigation */
     .tabs { display: flex; gap: 4px; justify-content: center; margin: 20px 0; background: #e2e8f0; padding: 5px; border-radius: 14px; }
     .tab-btn { flex: 1; border: none; background: transparent; color: var(--text-light); padding: 12px 5px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
     .tab-btn.active { background: #fff; color: var(--secondary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+    /* Panel & Cards */
     .panel { background: var(--surface); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
     .panel-header { padding: 20px 25px 12px; border-bottom: 1px solid var(--border); background: #fff; text-align: center; }
     .panel-body { padding: 20px 25px; }
-    select { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--border); font-size: 16px; background: #fff; cursor: pointer; }
-    .single-card { background: #ffffff; border-radius: 12px; border: 1px solid #bfdbfe; overflow: hidden; max-width: 550px; margin: 0 auto 15px; }
+    
+    select { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--border); font-size: 16px; background: #fff; cursor: pointer; color: var(--text); }
+    
+    .single-card { background: #ffffff; border-radius: 12px; border: 1px solid #bfdbfe; overflow: hidden; max-width: 550px; margin: 0 auto 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     .card-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #dbeafe; }
     .card-row:nth-child(even) { background-color: #e0f2fe; }
     .row-label { font-size: 16px; font-weight: 500; flex: 1; text-align: left; }
     .row-value { font-size: 19px; font-weight: 800; color: #800000; text-align: right; }
     .row-value small { color: var(--secondary); font-weight: 500; margin-left: 5px; font-size: 14px; }
+
+    /* New Feature: Profession Card */
+    .profession-card { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: left; }
+    .profession-card-title { font-weight: 700; color: var(--secondary); margin-bottom: 8px; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+    .profession-list { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+    /* Buttons & Actions */
     .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
-    .btn-item { background: #fff; border: 1px solid var(--border); padding: 14px; border-radius: 12px; text-align: left; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; }
+    .btn-item { background: #fff; border: 1px solid var(--border); padding: 14px; border-radius: 12px; text-align: left; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .btn-item:hover { border-color: var(--secondary); background: #eff6ff; }
     .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 18px; border-top: 1px solid var(--border); }
     .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; }
     .btn-home { background: #fff; color: var(--secondary); border: 1px solid var(--secondary); }
     .btn-dark { background: #0f172a; color: #fff; }
+
     .hide { display: none !important; }
     #loader { text-align: center; padding: 40px; color: var(--secondary); background: #fff; border-radius: 16px; margin: 40px auto; max-width: 330px; }
-    .profession-card { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; }
   </style>
 </head>
 <body>
 
 <header class="header">
-    <div style="font-size: 14px; color: #cbd5e1; margin-bottom: 5px;">:: ห้องทดลองระบบ (Test Mode) ::</div>
-    <h1 style="margin: 0; font-size: 22px;">ระบบสืบค้นอัตราเงินเพิ่ม/เงินประจำตำแหน่ง</h1>
+    <div class="test-label">:: ห้องทดลองระบบ (Test Mode) ::</div>
+    <h1>ระบบสืบค้นอัตราเงินเพิ่ม/เงินประจำตำแหน่ง</h1>
+    <div style="font-size: 13px; opacity: 0.8; margin-top: 8px;">กองอัตรากำลัง สำนักงานกำลังพล</div>
 </header>
 
 <div class="container">
-  <div id="loader">🔄 กำลังเชื่อมต่อฐานข้อมูลทดสอบ...</div>
+  <div id="loader">🔄 กำลังเชื่อมต่อฐานข้อมูล...</div>
 
   <div class="tabs hide" id="tabsBar">
     <button class="tab-btn active" id="tabUnit" onclick="switchTab('unit')">🏢 หน่วยงาน</button>
@@ -60,19 +80,30 @@
       <div class="panel-body"><select id="unitSelect"><option value="">— กรุณาเลือกหน่วยงาน —</option></select></div>
     </section>
     <section class="panel hide" id="step2">
-      <div class="panel-header"><div id="unitDisplay" style="font-weight:700; color:var(--secondary);"></div></div>
-      <div class="panel-body"><div class="btn-grid" id="moneyButtons"></div><div class="actions"><button class="btn btn-home" onclick="showStep(1)">🏠 กลับหน้าแรก</button></div></div>
+      <div class="panel-header"><div id="unitDisplay" style="font-weight:700; color:var(--secondary); font-size: 18px;"></div></div>
+      <div class="panel-body">
+        <div class="btn-grid" id="moneyButtons"></div>
+        <div class="actions"><button class="btn btn-home" onclick="showStep(1)">🏠 กลับหน้าแรก</button></div>
+      </div>
     </section>
     <section class="panel hide" id="step3">
       <div class="panel-header"><h2 id="step3Title" style="font-size: 18px; margin:0;">รายละเอียด</h2></div>
-      <div class="panel-body"><div id="rateGrid" class="single-card"></div><div class="actions"><button class="btn btn-home" onclick="showStep(2)">⬅️ ย้อนกลับ</button><button class="btn btn-dark" id="openPdf">📄 ระเบียบ (PDF)</button></div></div>
+      <div class="panel-body">
+        <div id="rateGrid" class="single-card"></div>
+        <div class="actions">
+          <button class="btn btn-home" onclick="showStep(2)">⬅️ ย้อนกลับ</button>
+          <button class="btn btn-dark" id="openPdf">📄 ระเบียบ (PDF)</button>
+        </div>
+      </div>
     </section>
   </div>
 
   <div id="tabMoneyView" class="hide">
     <section class="panel" id="moneyPanel">
       <div class="panel-body">
-        <select id="moneySelect"><option value="">— กรุณาเลือกประเภทเงิน —</option></select>
+        <div id="moneySearchForm">
+            <select id="moneySelect"><option value="">— กรุณาเลือกประเภทเงินเพิ่มพิเศษ —</option></select>
+        </div>
         <div class="hide" id="moneyResultWrap" style="margin-top:20px;">
           <div id="moneyRateGrid" class="single-card"></div>
           <div class="actions"><button class="btn btn-home" onclick="backToMoneySearch()">🏠 ค้นหาใหม่</button></div>
@@ -83,22 +114,27 @@
 
   <div id="tabPositionView" class="hide">
     <section class="panel" id="posStep1">
-      <div class="panel-body"><select id="posCategorySelect"><option value="">— เลือกประเภทเงินประจำตำแหน่ง —</option></select></div>
+      <div class="panel-body">
+        <select id="posCategorySelect"><option value="">— เลือกประเภทเงินประจำตำแหน่ง —</option></select>
+      </div>
     </section>
     <section class="panel hide" id="posStep2">
       <div class="panel-body">
         <div class="profession-card">
-          <div style="font-weight: 700; color: var(--secondary); margin-bottom: 5px;">📋 สายงานที่มีสิทธิได้รับ:</div>
-          <div id="posProfessionsBox"></div>
+          <div class="profession-card-title">📌 สายงานที่มีสิทธิได้รับ:</div>
+          <div id="posProfessionsBox" class="profession-list"></div>
         </div>
         <div id="posRateGrid" class="single-card"></div>
-        <div class="actions"><button class="btn btn-home" onclick="showPosStep(1)">🏠 ค้นหาใหม่</button></div>
+        <div class="actions">
+          <button class="btn btn-home" onclick="showPosStep(1)">🏠 ค้นหาใหม่</button>
+          <button class="btn btn-dark" id="openPosPdf">📄 ระเบียบฉบับเต็ม (ราชกิจจาฯ)</button>
+        </div>
       </div>
     </section>
   </div>
 
-  <div id="contactArea" class="hide" style="text-align:center; font-size:12px; color:var(--text-light); margin-top:20px;">
-    Developed by Nathakorn T. (กองอัตรากำลัง)
+  <div id="contactArea" class="hide" style="text-align:center; font-size:12px; color:var(--text-light); margin-top:30px; border-top: 1px dashed #cbd5e1; padding-top: 15px;">
+    พัฒนาโดย ณธกร (ฝ่ายงบประมาณ/กำลังพล)<br>ข้อมูลอ้างอิง: พระราชกฤษฎีกาเงินประจำตำแหน่ง พ.ศ. 2568
   </div>
 </div>
 
@@ -113,7 +149,21 @@
   let DB = { units: new Map(), images: new Map(), rates: new Map(), posAllo: new Map() };
 
   function show(el, yes) { if (el) el.classList.toggle("hide", !yes); }
-  function parseCSV(text) { return text.split('\n').map(row => row.split(',').map(c => c.trim().replace(/^"|"$/g, ''))); }
+  
+  // CSV Parser
+  function parseCSV(text) {
+    const rows = []; let cur = [], field = "", inQuote = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (c === '"') inQuote = !inQuote;
+      else if (c === ',' && !inQuote) { cur.push(field.trim()); field = ""; }
+      else if (c === '\n' && !inQuote) { cur.push(field.trim()); rows.push(cur); cur = []; field = ""; }
+      else if (c !== '\r') field += c;
+    }
+    if (field.length || cur.length) { cur.push(field.trim()); rows.push(cur); }
+    return rows.filter(r => r.some(x => x !== ""));
+  }
+
   function safeNumDisplay(raw) { 
     const n = parseFloat(String(raw).replace(/,/g, ''));
     return isNaN(n) ? { d: raw || "—", u: "" } : { d: n.toLocaleString(), u: "บาท" };
@@ -122,10 +172,14 @@
   function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+    
     show(document.getElementById("tabUnitView"), tab === "unit");
     show(document.getElementById("tabMoneyView"), tab === "money");
     show(document.getElementById("tabPositionView"), tab === "position");
-    if (tab === "unit") showStep(1); else if (tab === "money") backToMoneySearch(); else showPosStep(1);
+    
+    if (tab === "unit") showStep(1); 
+    else if (tab === "money") backToMoneySearch(); 
+    else showPosStep(1);
   }
 
   function showStep(n) { [1,2,3].forEach(s => show(document.getElementById('step'+s), s === n)); show(document.getElementById("contactArea"), n === 1); }
@@ -134,23 +188,37 @@
 
   async function init() {
     try {
-      const [imR, umR, rtR, psR] = await Promise.all([fetch(CONFIG.IMAGE_MAP), fetch(CONFIG.UNIT_MONEY_MAP), fetch(CONFIG.RATE_TABLE), fetch(CONFIG.POSITION_ALLO)]);
-      const [imT, umT, rtT, psT] = await Promise.all([imR.text(), umR.text(), rtR.text(), psR.text()]);
+      const responses = await Promise.all([
+        fetch(CONFIG.IMAGE_MAP), fetch(CONFIG.UNIT_MONEY_MAP), 
+        fetch(CONFIG.RATE_TABLE), fetch(CONFIG.POSITION_ALLO)
+      ]);
+      const [imT, umT, rtT, psT] = await Promise.all(responses.map(r => r.text()));
 
-      parseCSV(imT).slice(1).forEach(r => { if(r[0]) DB.images.set(r[0].slice(0,7), { name: r[1], pdf: r[2] }); });
-      parseCSV(umT).slice(1).forEach(r => { if(r[0]) { if(!DB.units.has(r[0])) DB.units.set(r[0], []); DB.units.get(r[0]).push({ m: r[1], id: r[2].slice(0,7) }); } });
-      parseCSV(rtT).slice(1).forEach(r => { const id = r[0].slice(0,7); if(!DB.rates.has(id)) DB.rates.set(id, []); DB.rates.get(id).push({ l: r[1], a: r[2] }); });
+      // 1. Load Images/PDFs
+      parseCSV(imT).slice(1).forEach(r => { if(r[0]) DB.images.set(r[0].trim().slice(0,7), { name: r[1], pdf: r[2] }); });
       
-      // โหลดข้อมูลเงินประจำตำแหน่ง (จาก CSV ใหม่)
+      // 2. Load Unit-Money Maps
+      parseCSV(umT).slice(1).forEach(r => { 
+        const u = r[0]; if(u) { if(!DB.units.has(u)) DB.units.set(u, []); DB.units.get(u).push({ m: r[1], id: r[2].trim().slice(0,7) }); } 
+      });
+      
+      // 3. Load Rates
+      parseCSV(rtT).slice(1).forEach(r => { 
+        const id = r[0].trim().slice(0,7); if(!DB.rates.has(id)) DB.rates.set(id, []); DB.rates.get(id).push({ l: r[1], a: r[2] }); 
+      });
+      
+      // 4. Load Position Allowance (New Tab)
       parseCSV(psT).slice(1).forEach(r => {
-        if (r[0]) {
-          if (!DB.posAllo.has(r[0])) DB.posAllo.set(r[0], { profs: r[1], rates: [] });
-          DB.posAllo.get(r[0]).rates.push({ rank: r[2], amt: r[3] });
+        const cat = r[0]; // คอลัมน์ A: ประเภทเงิน
+        if (cat) {
+          if (!DB.posAllo.has(cat)) DB.posAllo.set(cat, { profs: r[1], rates: [] }); // คอลัมน์ B: รายชื่อวิชาชีพ
+          DB.posAllo.get(cat).rates.push({ rank: r[2], amt: r[3] }); // คอลัมน์ C: ยศ, D: เงิน
         }
       });
 
+      // Populate Selects
       const unitSel = document.getElementById("unitSelect");
-      Array.from(DB.units.keys()).sort().forEach(u => { const o = document.createElement("option"); o.value = u; o.textContent = u; unitSel.appendChild(o); });
+      Array.from(DB.units.keys()).sort((a,b) => a.localeCompare(b,'th')).forEach(u => { const o = document.createElement("option"); o.value = u; o.textContent = u; unitSel.appendChild(o); });
       unitSel.onchange = (e) => { if(e.target.value) renderMoney(e.target.value); };
 
       const posSel = document.getElementById("posCategorySelect");
@@ -160,14 +228,14 @@
       show(document.getElementById("loader"), false);
       show(document.getElementById("tabsBar"), true);
       switchTab("unit");
-    } catch (e) { document.getElementById("loader").innerHTML = "❌ โหลดข้อมูลไม่สำเร็จ"; }
+    } catch (e) { document.getElementById("loader").innerHTML = "❌ ไม่สามารถโหลดข้อมูลได้ โปรดตรวจสอบการ Publish CSV"; }
   }
 
   function renderMoney(u) {
     document.getElementById("unitDisplay").textContent = u;
     const cont = document.getElementById("moneyButtons"); cont.innerHTML = "";
-    DB.units.get(u).forEach(item => {
-      const b = document.createElement("button"); b.className = "btn-item"; b.innerHTML = `<span>${item.m}</span> <span>→</span>`;
+    (DB.units.get(u) || []).forEach(item => {
+      const b = document.createElement("button"); b.className = "btn-item"; b.innerHTML = `<span>${item.m}</span> <span style="color:#94a3b8">→</span>`;
       b.onclick = () => renderResult(item.m, item.id); cont.appendChild(b);
     });
     showStep(2);
@@ -176,8 +244,8 @@
   function renderResult(m, id) {
     const img = DB.images.get(id); document.getElementById("step3Title").textContent = img?.name || m;
     const grid = document.getElementById("rateGrid"); grid.innerHTML = "";
-    (DB.rates.get(id) || []).forEach(r => { const v = safeNumDisplay(r.a); grid.innerHTML += `<div class="card-row"><div>${r.l}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`; });
-    document.getElementById("openPdf").onclick = () => { if(img?.pdf) window.open(img.pdf, "_blank"); else alert("ไม่พบระเบียบ"); };
+    (DB.rates.get(id) || []).forEach(r => { const v = safeNumDisplay(r.a); grid.innerHTML += `<div class="card-row"><div class="row-label">${r.l}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`; });
+    document.getElementById("openPdf").onclick = () => { if(img?.pdf) window.open(img.pdf, "_blank"); else alert("ไม่พบไฟล์ระเบียบในฐานข้อมูล"); };
     showStep(3);
   }
 
@@ -185,7 +253,11 @@
     const data = DB.posAllo.get(cat);
     document.getElementById("posProfessionsBox").textContent = data.profs;
     const grid = document.getElementById("posRateGrid"); grid.innerHTML = "";
-    data.rates.forEach(r => { const v = safeNumDisplay(r.amt); grid.innerHTML += `<div class="card-row"><div>${r.rank}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`; });
+    data.rates.forEach(r => { 
+      const v = safeNumDisplay(r.amt); 
+      grid.innerHTML += `<div class="card-row"><div class="row-label">${r.rank}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`; 
+    });
+    document.getElementById("openPosPdf").onclick = () => { window.open("https://ratchakitcha.soc.go.th/documents/58910.pdf", "_blank"); };
     showPosStep(2);
   }
 
