@@ -58,8 +58,8 @@
   <div id="loader">🔄 กำลังเชื่อมต่อฐานข้อมูล...</div>
 
   <div class="tabs hide" id="tabsBar">
-    <button class="tab-btn active" id="tabUnit" onclick="switchTab('unit')">🏢 หน่วยงาน</button>
-    <button class="tab-btn" id="tabMoney" onclick="switchTab('money')">💰 ประเภทเงินเพิ่ม</button>
+    <button class="tab-btn active" id="tabUnit" onclick="switchTab('unit')">🏢 ค้นหาตามหน่วยงาน</button>
+    <button class="tab-btn" id="tabMoney" onclick="switchTab('money')">💰 ค้นหาตามประเภทเงินเพิ่ม</button>
     <button class="tab-btn" id="tabPosition" onclick="switchTab('position')">🎖️ เงินประจำตำแหน่ง</button>
   </div>
 
@@ -120,7 +120,7 @@
     UNIT_MONEY_MAP: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1586070411&single=true&output=csv",
     RATE_TABLE: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=329415774&single=true&output=csv",
     UNIT_LINE: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=2044497343&single=true&output=csv",
-    POSITION_ALLO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?output=csv"
+    POSITION_ALLO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=1973268897&single=true&output=csv"
   };
 
   let DB = { units: new Map(), fullNames: new Map(), images: new Map(), rates: new Map(), unitLinesByBase: new Map(), moneyOptionsFromLine: [], posAllo: new Map() };
