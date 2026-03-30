@@ -1,10 +1,9 @@
 <!doctype html>
 <html lang="th">
 <head>
-<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DVPFNHZTHL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,25 +11,20 @@
     gtag('js', new Date());
     gtag('config', 'G-DVPFNHZTHL');
   </script>
-  </head>
-  
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <meta name="google-site-verification" content="rs0OyS9xAVLrR_mQaH-a5wdEAIvkZpK-CcHxZG1guco" />
   <meta name="description" content="สืบค้นอัตราเงินเพิ่ม เงินเพิ่มตำรวจ อัตราเงินเพิ่มพิเศษ ระเบียบเงินเพิ่ม และสิทธิประโยชน์ของข้าราชการตำรวจ พัฒนาโดย ฝ่ายเงินเพิ่มและเงินประจำตำแหน่ง กองอัตรากำลัง สำนักงานกำลังพล : Nathakorn T.">
   <meta name="keywords" content="เงินเพิ่มตำรวจ, อัตราเงินเพิ่มพิเศษ, สืบค้นเงินเพิ่ม, ตำรวจ, ระเบียบเงินเพิ่ม, กองอัตรากำลัง">
-  
+
   <title>เงินเพิ่มตำรวจ-ระบบสืบค้นอัตราเงินเพิ่มพิเศษ</title>
-  
+
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
   <link rel="manifest" href="manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="apple-touch-icon" href="icon02192.png">
   <link rel="icon" type="image/png" href="icon02192.png">
   <meta name="theme-color" content="#0f172a">
-  
+
   <style>
     :root {
       --primary: #0f172a; --secondary: #1e40af; --accent: #f97316;
@@ -63,26 +57,22 @@
     .panel { background: var(--surface); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
     .panel-header { padding: 20px 25px 12px; border-bottom: 1px solid var(--border); background: #fff; text-align: center; }
     .panel-body { padding: 20px 25px; }
-    
+
     .unit-display-box { margin-bottom: 12px; border-left: 5px solid #fbbf24; padding-left: 15px; text-align: left; }
     .unit-name { font-size: 18px; font-weight: 600; color: var(--secondary); display: block; line-height: 1.4; }
 
     select { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--border); font-size: 16px; background: #fff; cursor: pointer; color: var(--text); }
 
-    .single-card { 
-      background: #ffffff; /* เปลี่ยนพื้นหลังหลักเป็นขาวเพื่อให้ตัดกับแถบสี */
-      border-radius: 12px; border: 1px solid #bfdbfe; overflow: hidden; 
+    .single-card {
+      background: #ffffff;
+      border-radius: 12px; border: 1px solid #bfdbfe; overflow: hidden;
       max-width: 550px; margin: 0 auto 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
-    
-    .card-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #dbeafe; }
 
-    /* แก้ไขข้อ 1: ปรับแถวสลับให้เป็นสีฟ้าเข้มขึ้น (Sky 100) เพื่อให้เห็นความต่างชัดเจน */
-    .card-row:nth-child(even) { background-color: #e0f2fe; } 
+    .card-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #dbeafe; }
+    .card-row:nth-child(even) { background-color: #e0f2fe; }
 
     .row-label { font-size: 16px; font-weight: 500; color: var(--text); flex: 1; text-align: left; }
-
-    /* แก้ไขข้อ 2 & 3: ปรับตัวเลขเป็นสีแดงเลือดนก (#800000) และดึงสี 'บาท' กลับมาเป็นสีน้ำเงิน */
     .row-value { font-size: 19px; font-weight: 800; color: #800000; text-align: right; }
     .row-value small { color: var(--secondary); font-weight: 500; margin-left: 5px; font-size: 14px; }
 
@@ -100,32 +90,29 @@
 
     .disclaimer { font-size: 13px; color: #ef4444; margin: 15px 0; text-align: center; font-style: italic; }
     .contact-footer { margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border); text-align: center; font-size: 13px; color: var(--text-light); }
-    
+
     .line-group { margin-top: 14px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: #fff; }
     .line-head { padding: 12px 14px; background: #eff6ff; border-bottom: 1px solid #dbeafe; font-size: 15px; font-weight: 600; color: var(--secondary); display: flex; justify-content: space-between; }
     .chip-wrap { padding: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
     .chip { border: 1px solid var(--border); background: #f8fafc; padding: 6px 10px; border-radius: 999px; font-size: 13px; }
 
     .hide { display: none !important; }
-    #loader { text-align: center; padding: 40px; color: var(--secondary); background: #fff; border-radius: 16px; margin: 40px auto; max-width: 330px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    #loader {
+      text-align: center; padding: 40px; color: var(--secondary); background: #fff;
+      border-radius: 16px; margin: 40px auto; max-width: 520px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
 
 <header class="header" style="text-align: center; padding: 30px 20px;">
-    
-    <div style="font-size: 16px; color: #cbd5e1; margin-bottom: 5px;">
-      :: เงินเพิ่มตำรวจ ::
-    </div>
-
-    <h1 style="margin: 0; font-size: 24px; font-weight: bold; color: #ffffff;">
-      ระบบสืบค้นอัตราเงินเพิ่มพิเศษ
-    </h1>
-    
-    <div class="owner-info" style="margin-top: 10px; font-size: 14px; color: #ffffff; opacity: 0.8;">
-      ฝ่ายเงินเพิ่มและเงินประจำตำแหน่ง กองอัตรากำลัง สำนักงานกำลังพล
-    </div>
-
+  <div style="font-size: 16px; color: #cbd5e1; margin-bottom: 5px;">:: เงินเพิ่มตำรวจ ::</div>
+  <h1 style="margin: 0; font-size: 24px; font-weight: bold; color: #ffffff;">ระบบสืบค้นอัตราเงินเพิ่มพิเศษ</h1>
+  <div class="owner-info" style="margin-top: 10px; font-size: 14px; color: #ffffff; opacity: 0.8;">
+    ฝ่ายเงินเพิ่มและเงินประจำตำแหน่ง กองอัตรากำลัง สำนักงานกำลังพล
+  </div>
 </header>
 
 <div class="container">
@@ -175,7 +162,7 @@
         <div id="moneySearchForm">
           <select id="moneySelect"><option value="">— กรุณาเลือกประเภทเงิน —</option></select>
         </div>
-        
+
         <div class="hide" id="moneyResultWrap" style="margin-top:10px;">
           <div class="panel" style="box-shadow:none; border:1px solid var(--border); margin-bottom:20px;">
             <div class="panel-header">
@@ -202,36 +189,33 @@
     <div class="disclaimer">*เพื่อการสืบค้นข้อมูลเบื้องต้น โปรดตรวจสอบความถูกต้องจากบัญชีกำหนดตำแหน่ง</div>
     <div class="contact-footer">
       <div style="color: #1e3a8a; font-weight: 500;">
-        📞 0 2205 2036 | 🌐 <a href="https://pdd.police.go.th/" target="_blank" style="color: inherit; text-decoration: none;">กองอัตรากำลัง</a>    
-        </div>
+        📞 0 2205 2036 | 🌐 <a href="https://pdd.police.go.th/" target="_blank" style="color: inherit; text-decoration: none;">กองอัตรากำลัง</a>
+      </div>
+
       <div style="margin-top: 10px; font-size: 12px; color: #94a3b8; text-align: center;">
         Developed by Nathakorn T.
-        
-<div style="margin-top: 15px; display: flex; justify-content: center; align-items: center; font-family: 'Sarabun', sans-serif; font-size: 11px;">
-  <span style="background: #f1f5f9; color: #64748b; padding: 2px 10px; border: 1px solid #cbd5e1; border-right: none; border-radius: 4px 0 0 4px;">
-    จำนวนผู้ใช้งาน
-  </span>
-  <span id="visit-count" style="background: #e2e8f0; color: #475569; padding: 2px 10px; border: 1px solid #cbd5e1; border-radius: 0 4px 4px 0; min-width: 20px; text-align: center; font-weight: normal;">
-    ...
-  </span>
-</div>
 
-<script>
-  // โค้ดดึงข้อมูลตัวนับ (Counter API)
-  fetch('https://api.counterapi.dev/v1/n4appsearch/police-allowance/up')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('visit-count').innerText = data.count;
-    })
-    .catch(() => {
-      document.getElementById('visit-count').innerText = '0';
-    });
-</script>
+        <div style="margin-top: 15px; display: flex; justify-content: center; align-items: center; font-family: 'Sarabun', sans-serif; font-size: 11px;">
+          <span style="background: #f1f5f9; color: #64748b; padding: 2px 10px; border: 1px solid #cbd5e1; border-right: none; border-radius: 4px 0 0 4px;">
+            จำนวนผู้ใช้งาน
+          </span>
+          <span id="visit-count" style="background: #e2e8f0; color: #475569; padding: 2px 10px; border: 1px solid #cbd5e1; border-radius: 0 4px 4px 0; min-width: 20px; text-align: center; font-weight: normal;">
+            ...
+          </span>
+        </div>
 
-        
-</div>
-    </div>
-      
+        <script>
+          // คงตัวนับเดิมไว้เหมือนเดิม
+          fetch('https://api.counterapi.dev/v1/n4appsearch/police-allowance/up')
+            .then(res => res.json())
+            .then(data => {
+              document.getElementById('visit-count').innerText = data.count;
+            })
+            .catch(() => {
+              document.getElementById('visit-count').innerText = '0';
+            });
+        </script>
+      </div>
     </div>
   </div>
 </div>
@@ -244,24 +228,40 @@
     UNIT_LINE: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGnbLFVdXGVHlnqVOXM32brh11fMSOjVWkBp95PfiKOZrq6tvC31YW9-5v5QGS8Qsf_FMOEFQsoPe_/pub?gid=2044497343&single=true&output=csv"
   };
 
-  let DB = { units: new Map(), fullNames: new Map(), images: new Map(), rates: new Map(), unitLinesByBase: new Map(), moneyOptionsFromLine: [] };
+  const DB = {
+    units: new Map(),
+    fullNames: new Map(),
+    images: new Map(),
+    rates: new Map(),
+    unitLinesByBase: new Map(),
+    moneyOptionsFromLine: []
+  };
 
-  function baseId(id) { return id ? String(id).trim().slice(0, 7) : ""; }
-  function show(el, yes) { if (el) el.classList.toggle("hide", !yes); }
-  function toggleContact(isVisible) { show(document.getElementById("contactArea"), isVisible); }
+  function baseId(id) {
+    return id ? String(id).trim().slice(0, 7) : "";
+  }
+
+  function show(el, yes) {
+    if (el) el.classList.toggle("hide", !yes);
+  }
+
+  function toggleContact(isVisible) {
+    show(document.getElementById("contactArea"), isVisible);
+  }
 
   function switchTab(tab) {
     document.getElementById("tabUnit").classList.toggle("active", tab === "unit");
     document.getElementById("tabMoney").classList.toggle("active", tab === "money");
     show(document.getElementById("tabUnitView"), tab === "unit");
     show(document.getElementById("tabMoneyView"), tab === "money");
-    if (tab === "unit") showStep(1); else backToMoneySearch();
+    if (tab === "unit") showStep(1);
+    else backToMoneySearch();
   }
 
   function showStep(n) {
-    [1,2,3].forEach(s => show(document.getElementById('step'+s), s === n));
-    if (n === 1) document.getElementById("unitSelect").value = ""; 
-    toggleContact(n === 1); 
+    [1, 2, 3].forEach(s => show(document.getElementById("step" + s), s === n));
+    if (n === 1) document.getElementById("unitSelect").value = "";
+    toggleContact(n === 1);
   }
 
   function backToMoneySearch() {
@@ -271,21 +271,53 @@
     toggleContact(true);
   }
 
+  function escapeHtml(str) {
+    return String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   function parseCSV(text) {
-    const rows = []; let cur = [], field = "", inQuote = false;
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+
     for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      if (c === '"') inQuote = !inQuote;
-      else if (c === ',' && !inQuote) { cur.push(field.trim()); field = ""; }
-      else if (c === '\n' && !inQuote) { cur.push(field.trim()); rows.push(cur); cur = []; field = ""; }
-      else if (c !== '\r') field += c;
+      const char = text[i];
+      const next = text[i + 1];
+
+      if (char === '"') {
+        if (inQuotes && next === '"') {
+          field += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === ',' && !inQuotes) {
+        row.push(field.trim());
+        field = "";
+      } else if (char === '\n' && !inQuotes) {
+        row.push(field.trim());
+        rows.push(row);
+        row = [];
+        field = "";
+      } else if (char !== '\r') {
+        field += char;
+      }
     }
-    if (field.length || cur.length) { cur.push(field.trim()); rows.push(cur); }
+
+    row.push(field.trim());
+    rows.push(row);
+
     return rows.filter(r => r.some(x => String(x || "").trim() !== ""));
   }
 
   function getVal(row, head, keys) {
-    for (let k of keys) {
+    for (const k of keys) {
       const idx = head.indexOf(String(k).toLowerCase());
       if (idx > -1) return row[idx] ?? "";
     }
@@ -295,58 +327,129 @@
   function safeNumDisplay(raw) {
     raw = String(raw ?? "").trim();
     if (raw === "" || raw === "-") return { d: "—", u: "" };
-    const clean = raw.replace(/,/g, ""); const num = Number(clean);
+    const clean = raw.replace(/,/g, "");
+    const num = Number(clean);
     return (!isNaN(num) && clean !== "") ? { d: num.toLocaleString(), u: "บาท" } : { d: raw, u: "" };
+  }
+
+  async function fetchCsvText(url, label) {
+    const fetchUrl = url + (url.includes("?") ? "&" : "?") + "_ts=" + Date.now();
+
+    let res;
+    try {
+      res = await fetch(fetchUrl, {
+        method: "GET",
+        mode: "cors",
+        cache: "no-store"
+      });
+    } catch (networkErr) {
+      throw new Error(`เชื่อมต่อ ${label} ไม่สำเร็จ\n${url}`);
+    }
+
+    if (!res.ok) {
+      throw new Error(`โหลด ${label} ไม่สำเร็จ [${res.status}]\n${url}`);
+    }
+
+    const text = await res.text();
+
+    if (!text || !text.trim()) {
+      throw new Error(`ข้อมูล ${label} ว่างเปล่า\n${url}`);
+    }
+
+    if (text.includes("<!DOCTYPE html") || text.includes("<html")) {
+      throw new Error(`ข้อมูล ${label} ไม่ใช่ CSV\nตรวจสอบการ Publish ของชีตนี้\n${url}`);
+    }
+
+    return text;
+  }
+
+  function validateParsedData(name, rows) {
+    if (!Array.isArray(rows) || rows.length < 2) {
+      throw new Error(`ชีต ${name} ไม่มีข้อมูลเพียงพอ`);
+    }
   }
 
   async function init() {
     const loader = document.getElementById("loader");
+
     try {
-      const responses = await Promise.all([
-        fetch(CONFIG.IMAGE_MAP), fetch(CONFIG.UNIT_MONEY_MAP), 
-        fetch(CONFIG.RATE_TABLE), fetch(CONFIG.UNIT_LINE)
+      loader.textContent = "🔄 กำลังเชื่อมต่อฐานข้อมูล...";
+
+      const [imText, umText, rtText, ulText] = await Promise.all([
+        fetchCsvText(CONFIG.IMAGE_MAP, "IMAGE_MAP"),
+        fetchCsvText(CONFIG.UNIT_MONEY_MAP, "UNIT_MONEY_MAP"),
+        fetchCsvText(CONFIG.RATE_TABLE, "RATE_TABLE"),
+        fetchCsvText(CONFIG.UNIT_LINE, "UNIT_LINE")
       ]);
 
-      for (const res of responses) {
-        if (!res.ok) throw new Error("ไม่สามารถเข้าถึงฐานข้อมูลได้");
-      }
+      const im = parseCSV(imText);
+      const um = parseCSV(umText);
+      const rt = parseCSV(rtText);
+      const ul = parseCSV(ulText);
 
-      const [imText, umText, rtText, ulText] = await Promise.all(responses.map(r => r.text()));
+      validateParsedData("IMAGE_MAP", im);
+      validateParsedData("UNIT_MONEY_MAP", um);
+      validateParsedData("RATE_TABLE", rt);
+      validateParsedData("UNIT_LINE", ul);
 
-      const im = parseCSV(imText); const imHead = im[0].map(h => String(h).toLowerCase());
+      const imHead = im[0].map(h => String(h).toLowerCase().trim());
       im.slice(1).forEach(r => {
         const id = baseId(getVal(r, imHead, ["image_id", "imageid"]));
-        if (id) DB.images.set(id, { full_name: getVal(r, imHead, ["full_name", "ชื่อเต็ม"]), pdf_url: getVal(r, imHead, ["pdf_url", "ลิงก์pdf"]) });
-      });
-
-      const um = parseCSV(umText); const umHead = um[0].map(h => String(h).toLowerCase());
-      um.slice(1).forEach(r => {
-        const uShort = getVal(r, umHead, ["unit_name", "unit", "หน่วย"]), id = baseId(getVal(r, umHead, ["image_id", "imageid"]));
-        if (uShort) {
-          if (!DB.units.has(uShort)) DB.units.set(uShort, []);
-          DB.units.get(uShort).push({ m: getVal(r, umHead, ["money_name", "ประเภทเงิน"]), id });
-          DB.fullNames.set(uShort, getVal(r, umHead, ["full_unit_name", "ชื่อเต็มหน่วยงาน"]) || uShort);
+        if (id) {
+          DB.images.set(id, {
+            full_name: getVal(r, imHead, ["full_name", "ชื่อเต็ม"]),
+            pdf_url: getVal(r, imHead, ["pdf_url", "ลิงก์pdf"])
+          });
         }
       });
 
-      const rt = parseCSV(rtText); const rtHead = rt[0].map(h => String(h).toLowerCase());
+      const umHead = um[0].map(h => String(h).toLowerCase().trim());
+      um.slice(1).forEach(r => {
+        const uShort = getVal(r, umHead, ["unit_name", "unit", "หน่วย"]);
+        const id = baseId(getVal(r, umHead, ["image_id", "imageid"]));
+
+        if (uShort) {
+          if (!DB.units.has(uShort)) DB.units.set(uShort, []);
+          DB.units.get(uShort).push({
+            m: getVal(r, umHead, ["money_name", "ประเภทเงิน"]),
+            id
+          });
+          DB.fullNames.set(
+            uShort,
+            getVal(r, umHead, ["full_unit_name", "ชื่อเต็มหน่วยงาน"]) || uShort
+          );
+        }
+      });
+
+      const rtHead = rt[0].map(h => String(h).toLowerCase().trim());
       rt.slice(1).forEach(r => {
         const id = baseId(getVal(r, rtHead, ["image_id", "imageid"]));
         if (id) {
           if (!DB.rates.has(id)) DB.rates.set(id, []);
-          DB.rates.get(id).push({ label: getVal(r, rtHead, ["ตำแหน่ง", "ระดับ", "label"]), amount: getVal(r, rtHead, ["amount", "อัตราเงิน"]), order: Number(getVal(r, rtHead, ["order", "ลำดับ"])|| 9999) });
+          DB.rates.get(id).push({
+            label: getVal(r, rtHead, ["ตำแหน่ง", "ระดับ", "label"]),
+            amount: getVal(r, rtHead, ["amount", "อัตราเงิน"]),
+            order: Number(getVal(r, rtHead, ["order", "ลำดับ"]) || 9999)
+          });
         }
       });
 
-      const ul = parseCSV(ulText); const ulHead = ul[0].map(h => String(h).toLowerCase());
+      const ulHead = ul[0].map(h => String(h).toLowerCase().trim());
       const moneySeen = new Set();
+
       ul.slice(1).forEach(r => {
-        const uShort = getVal(r, ulHead, ["หน่วย", "unit", "unit_name"]), id = baseId(getVal(r, ulHead, ["image_id", "imageid"])), line = getVal(r, ulHead, ["สายงาน", "work_line"]) || "ทั่วไป", mNameFromLine = getVal(r, ulHead, ["ประเภทเงิน"]);
+        const uShort = getVal(r, ulHead, ["หน่วย", "unit", "unit_name"]);
+        const id = baseId(getVal(r, ulHead, ["image_id", "imageid"]));
+        const line = getVal(r, ulHead, ["สายงาน", "work_line"]) || "ทั่วไป";
+        const mNameFromLine = getVal(r, ulHead, ["ประเภทเงิน"]);
+
         if (id && uShort) {
           if (!DB.unitLinesByBase.has(id)) DB.unitLinesByBase.set(id, new Map());
           const lineMap = DB.unitLinesByBase.get(id);
+
           if (!lineMap.has(line)) lineMap.set(line, []);
           lineMap.get(line).push({ unit: uShort });
+
           if (mNameFromLine && !moneySeen.has(id)) {
             DB.moneyOptionsFromLine.push({ id, name: mNameFromLine });
             moneySeen.add(id);
@@ -355,79 +458,150 @@
       });
 
       const unitSelect = document.getElementById("unitSelect");
-      Array.from(DB.units.keys()).sort((a,b) => a.localeCompare(b, 'th')).forEach(u => { 
-        const opt = document.createElement("option"); opt.value = u; opt.textContent = u; unitSelect.appendChild(opt); 
-      });
-      unitSelect.onchange = (e) => { if (e.target.value) renderMoney(e.target.value); };
+      Array.from(DB.units.keys())
+        .sort((a, b) => a.localeCompare(b, "th"))
+        .forEach(u => {
+          const opt = document.createElement("option");
+          opt.value = u;
+          opt.textContent = u;
+          unitSelect.appendChild(opt);
+        });
+
+      unitSelect.onchange = (e) => {
+        if (e.target.value) renderMoney(e.target.value);
+      };
 
       const moneySelect = document.getElementById("moneySelect");
-      DB.moneyOptionsFromLine.sort((a,b) => a.name.localeCompare(b.name, 'th')).forEach(item => { 
-        const opt = document.createElement("option"); opt.value = item.id; opt.textContent = item.name; moneySelect.appendChild(opt); 
-      });
-      moneySelect.onchange = (e) => { if (e.target.value) renderMoneyPath(baseId(e.target.value)); };
+      DB.moneyOptionsFromLine
+        .sort((a, b) => a.name.localeCompare(b.name, "th"))
+        .forEach(item => {
+          const opt = document.createElement("option");
+          opt.value = item.id;
+          opt.textContent = item.name;
+          moneySelect.appendChild(opt);
+        });
+
+      moneySelect.onchange = (e) => {
+        if (e.target.value) renderMoneyPath(baseId(e.target.value));
+      };
 
       show(loader, false);
       show(document.getElementById("tabsBar"), true);
       switchTab("unit");
-    } catch (err) { 
-      console.error(err);
-      loader.innerHTML = "❌ " + err.message;
+    } catch (err) {
+      console.error("INIT ERROR:", err);
+      loader.textContent =
+        "❌ โหลดข้อมูลไม่สำเร็จ\n\n" +
+        err.message +
+        "\n\nกรุณาตรวจสอบว่าฐานข้อมูลที่ใช้งานอยู่ยัง Publish ถูกต้อง";
     }
   }
 
   function renderMoney(unitShort) {
     document.getElementById("unitDisplay").textContent = DB.fullNames.get(unitShort) || unitShort;
-    const container = document.getElementById("moneyButtons"); container.innerHTML = "";
-    (DB.units.get(unitShort) || []).sort((a,b) => String(a.m).localeCompare(String(b.m), 'th')).forEach(item => {
-      const b = document.createElement("button"); b.className = "btn-item"; b.innerHTML = `<span>${item.m}</span> <span style="color:#94a3b8">→</span>`; 
-      b.onclick = () => renderResult(item.m, item.id); container.appendChild(b);
-    });
+    const container = document.getElementById("moneyButtons");
+    container.innerHTML = "";
+
+    (DB.units.get(unitShort) || [])
+      .sort((a, b) => String(a.m).localeCompare(String(b.m), "th"))
+      .forEach(item => {
+        const b = document.createElement("button");
+        b.className = "btn-item";
+        b.innerHTML = `<span>${escapeHtml(item.m)}</span><span style="color:#94a3b8">→</span>`;
+        b.onclick = () => renderResult(item.m, item.id);
+        container.appendChild(b);
+      });
+
     showStep(2);
   }
 
   function renderResult(mName, idRaw) {
-    const id = baseId(idRaw); const img = DB.images.get(id);
+    const id = baseId(idRaw);
+    const img = DB.images.get(id);
+
     document.getElementById("step3Title").textContent = img?.full_name || mName;
-    const grid = document.getElementById("rateGrid"); grid.innerHTML = "";
-    (DB.rates.get(id) || []).sort((a,b) => a.order - b.order).forEach(r => {
-      const v = safeNumDisplay(r.amount);
-      grid.innerHTML += `<div class="card-row"><div class="row-label">${r.label || "-"}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`;
-    });
-    document.getElementById("openPdf").onclick = () => { if(img?.pdf_url) window.open(img.pdf_url, "_blank"); else alert("ไม่พบระเบียบ"); };
+    const grid = document.getElementById("rateGrid");
+    grid.innerHTML = "";
+
+    (DB.rates.get(id) || [])
+      .sort((a, b) => a.order - b.order)
+      .forEach(r => {
+        const v = safeNumDisplay(r.amount);
+        grid.innerHTML += `
+          <div class="card-row">
+            <div class="row-label">${escapeHtml(r.label || "-")}</div>
+            <div class="row-value">${escapeHtml(v.d)} <small>${escapeHtml(v.u)}</small></div>
+          </div>
+        `;
+      });
+
+    document.getElementById("openPdf").onclick = () => {
+      if (img?.pdf_url) window.open(img.pdf_url, "_blank");
+      else alert("ไม่พบระเบียบ");
+    };
+
     showStep(3);
   }
 
   function renderMoneyPath(idBase) {
     show(document.getElementById("moneySearchForm"), false);
     show(document.getElementById("moneyResultWrap"), true);
-    toggleContact(false); 
-    const img = DB.images.get(idBase); document.getElementById("moneyFullTitle").textContent = img?.full_name || "รายละเอียด";
-    const rateGrid = document.getElementById("moneyRateGrid"); rateGrid.innerHTML = "";
-    (DB.rates.get(idBase) || []).sort((a,b) => a.order - b.order).forEach(r => {
-      const v = safeNumDisplay(r.amount);
-      rateGrid.innerHTML += `<div class="card-row"><div class="row-label">${r.label || "-"}</div><div class="row-value">${v.d} <small>${v.u}</small></div></div>`;
-    });
-    document.getElementById("moneyOpenPdf").onclick = () => { if(img?.pdf_url) window.open(img.pdf_url, "_blank"); else alert("ไม่พบระเบียบ"); };
-    
-    const groupsWrap = document.getElementById("unitLineGroups"); groupsWrap.innerHTML = "";
+    toggleContact(false);
+
+    const img = DB.images.get(idBase);
+    document.getElementById("moneyFullTitle").textContent = img?.full_name || "รายละเอียด";
+
+    const rateGrid = document.getElementById("moneyRateGrid");
+    rateGrid.innerHTML = "";
+
+    (DB.rates.get(idBase) || [])
+      .sort((a, b) => a.order - b.order)
+      .forEach(r => {
+        const v = safeNumDisplay(r.amount);
+        rateGrid.innerHTML += `
+          <div class="card-row">
+            <div class="row-label">${escapeHtml(r.label || "-")}</div>
+            <div class="row-value">${escapeHtml(v.d)} <small>${escapeHtml(v.u)}</small></div>
+          </div>
+        `;
+      });
+
+    document.getElementById("moneyOpenPdf").onclick = () => {
+      if (img?.pdf_url) window.open(img.pdf_url, "_blank");
+      else alert("ไม่พบระเบียบ");
+    };
+
+    const groupsWrap = document.getElementById("unitLineGroups");
+    groupsWrap.innerHTML = "";
+
     const lineMap = DB.unitLinesByBase.get(idBase);
     if (lineMap) {
-      Array.from(lineMap.entries()).sort().forEach(([line, items]) => {
-        const box = document.createElement("div"); box.className = "line-group";
-        box.innerHTML = `<div class="line-head"><span>📌 ${line}</span><span>${items.length} หน่วย</span></div>`;
-        const chips = document.createElement("div"); chips.className = "chip-wrap";
-        items.sort((a,b) => a.unit.localeCompare(b.unit, 'th')).forEach(u => {
-           chips.innerHTML += `<div class="chip"><span>${u.unit}</span></div>`;
+      Array.from(lineMap.entries())
+        .sort((a, b) => a[0].localeCompare(b[0], "th"))
+        .forEach(([line, items]) => {
+          const box = document.createElement("div");
+          box.className = "line-group";
+          box.innerHTML = `<div class="line-head"><span>📌 ${escapeHtml(line)}</span><span>${items.length} หน่วย</span></div>`;
+
+          const chips = document.createElement("div");
+          chips.className = "chip-wrap";
+
+          items
+            .sort((a, b) => a.unit.localeCompare(b.unit, "th"))
+            .forEach(u => {
+              chips.innerHTML += `<div class="chip"><span>${escapeHtml(u.unit)}</span></div>`;
+            });
+
+          box.appendChild(chips);
+          groupsWrap.appendChild(box);
         });
-        box.appendChild(chips); groupsWrap.appendChild(box);
-      });
     }
   }
 
-  // ลงทะเบียน Service Worker เพื่อให้คอมพิวเตอร์และมือถือติดตั้งแอปได้
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .catch(err => console.log("SW registration failed:", err));
     });
   }
 
@@ -435,20 +609,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
