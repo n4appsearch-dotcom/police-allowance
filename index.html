@@ -1026,15 +1026,29 @@ ${url}
   }
 
   function initVisitCounter() {
-    fetch('https://api.counterapi.dev/v1/n4appsearch/police-allowance/up')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('visit-count').innerText = data.count;
-      })
-      .catch(() => {
-        document.getElementById('visit-count').innerText = '0';
-      });
-  }
+  const counterEl = document.getElementById("visit-count");
+  if (!counterEl) return;
+
+  // ใส่ยอดเดิมตรงนี้ ถ้าต้องการให้นับต่อจากของเก่า
+  // ถ้าจะเริ่มใหม่ ให้ใส่ 0
+  const OLD_COUNT = 2250;
+
+  const counterUrl =
+    "https://counterapi.com/api/n4appsearch-dotcom.github.io/view/police-allowance?startNumber=" + OLD_COUNT;
+
+  fetch(counterUrl, { cache: "no-store" })
+    .then(res => {
+      if (!res.ok) throw new Error("Counter service unavailable");
+      return res.json();
+    })
+    .then(data => {
+      const value = data.value ?? data.count ?? "-";
+      counterEl.innerText = value;
+    })
+    .catch(() => {
+      counterEl.innerText = "-";
+    });
+}
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
