@@ -416,15 +416,26 @@ select{background:linear-gradient(120deg,#fff,#f7fbff);border:2px solid #164f8c;
 .disclaimer{font-size:19px;font-weight:600;color:#95152f;margin:24px auto;line-height:1.8;max-width:1000px}.contact-footer{font-size:22px;border-top:1px solid #a9c4df;padding-top:23px}.contact-footer>div:nth-child(2){font-size:18px!important;color:#173b66!important}.contact-footer>div:nth-child(2)>div{font-size:17px!important}.contact-footer span{padding:8px 15px!important;border-color:#c89d30!important;background:linear-gradient(110deg,#fffdf5,#fff0c4)!important;color:#63430b!important}#visit-count{font-weight:700!important;color:#062b5b!important}#loader{font-size:22px;border:1px solid #b4cde8;border-top:5px solid #deb029;line-height:1.8;overflow-wrap:anywhere;max-width:850px}
 @media(max-width:600px){body{font-size:19px}.container{padding:0 13px;margin-top:22px}.tabs{gap:8px;margin:20px 0}.tab-btn{font-size:18px;min-height:77px;padding:13px 7px;line-height:1.55}.panel{border-radius:15px}.panel-body{padding:21px 15px}.panel-header{padding:18px 16px}.panel-header h2,#moneyFullTitle{font-size:23px!important}.unit-name{font-size:25px}select{font-size:21px;padding:15px 11px;min-height:67px}.btn-grid{grid-template-columns:1fr;gap:13px}.btn-item{font-size:21px;min-height:76px;padding:18px 14px}.card-row{padding:17px 13px;gap:10px;align-items:center}.row-label{font-size:20px;min-width:0;margin-right:0;overflow-wrap:anywhere}.row-value{font-size:26px;white-space:normal;max-width:55%;overflow-wrap:anywhere}.row-value small{font-size:17px}.actions{padding:18px 14px;gap:11px}.btn{font-size:20px;min-height:58px;padding:14px 16px}.section-caption{font-size:22px}.line-head{font-size:21px;padding:14px;flex-wrap:wrap}.line-head>span:last-child{font-size:16px}.chip-wrap{padding:14px;gap:9px}.chip{font-size:19px;padding:10px 13px}.disclaimer{font-size:17px;line-height:1.9}.contact-footer{font-size:19px}.contact-footer>div:nth-child(2){font-size:17px!important}#loader{padding:25px 17px;font-size:19px}.btn:hover,.btn-item:hover{transform:none}}
 
+
+/* Explicit mobile line breaks; desktop text remains inline. */
+.mobile-phrase{display:inline}
+@media(max-width:600px){
+ .header h1{font-size:clamp(22px,6.45vw,28px);line-height:1.6;width:100%;max-width:none}
+ .header h1 .mobile-phrase,.owner-info .mobile-phrase,.tab-btn .mobile-phrase{display:block;white-space:nowrap}
+ .owner-info{font-size:clamp(12px,3.55vw,16px);line-height:1.85;max-width:none;width:100%}
+ .tab-btn{font-size:clamp(15px,4.35vw,19px);min-height:86px;padding:12px 5px;line-height:1.6}
+ .mobile-tab-label{display:block;max-width:100%}
+}
+
 </style>
 </head>
 <body>
 
 <header class="header">
   <div class="header-kicker">:: เงินเพิ่มตำรวจ ::</div>
-  <h1>ระบบสืบค้นอัตราเงินเพิ่มพิเศษ</h1>
+  <h1><span class="mobile-phrase">ระบบสืบค้น</span><span class="mobile-phrase">อัตราเงินเพิ่มพิเศษ</span></h1>
   <div class="owner-info">
-    ฝ่ายเงินเพิ่มและเงินประจำตำแหน่ง กองอัตรากำลัง สำนักงานกำลังพล
+    <span class="mobile-phrase">ฝ่ายเงินเพิ่มและเงินประจำตำแหน่ง</span> <span class="mobile-phrase">กองอัตรากำลัง สำนักงานกำลังพล</span>
   </div>
 </header>
 
@@ -432,8 +443,8 @@ select{background:linear-gradient(120deg,#fff,#f7fbff);border:2px solid #164f8c;
   <div id="loader">🔄 กำลังเชื่อมต่อฐานข้อมูล...</div>
 
   <div class="tabs hide" id="tabsBar">
-    <button class="tab-btn active" id="tabUnit" onclick="switchTab('unit')">🏢 ค้นหาจากหน่วยงาน</button>
-    <button class="tab-btn" id="tabMoney" onclick="switchTab('money')">💰 ค้นหาจากประเภทเงิน</button>
+    <button class="tab-btn active" id="tabUnit" onclick="switchTab('unit')"><span class="mobile-tab-label"><span class="mobile-phrase">🏢 ค้นหาจาก</span><span class="mobile-phrase">หน่วยงาน</span></span></button>
+    <button class="tab-btn" id="tabMoney" onclick="switchTab('money')"><span class="mobile-tab-label"><span class="mobile-phrase">💰 ค้นหาจาก</span><span class="mobile-phrase">ประเภทเงิน</span></span></button>
   </div>
 
   <div id="tabUnitView" class="hide">
